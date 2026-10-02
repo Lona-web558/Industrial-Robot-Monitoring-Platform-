@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Robot Monitoring Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" rel="stylesheet"><script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand fw-bold" href="#"><i class="bi bi-robot me-2"></i>RoboWatch</a><span class="navbar-text text-light small"><span class="live-dot"></span> Live telemetry</span>
+        </div>
+    </nav>
+    <main class="container-fluid p-4"><div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Robot Monitoring Platform</h1><p class="text-secondary mb-0">
+                Fleet health, telemetry, alerts and remote controls
+            </p>
+        </div>
+        <button class="btn btn-outline-primary" onclick="refresh()"><i class="bi bi-arrow-clockwise me-1"></i>Refresh</button>
+    </div>
+        <div class="row g-3 mb-4" id="stats"></div>
+        <div class="row g-4">
+            <div class="col-xl-8">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white d-flex justify-content-between">
+                        <strong>Fleet Map</strong><span class="small text-secondary">Warehouse simulation</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="warehouse" id="map">
+                            <div class="zone z1">
+                                A
+                            </div>
+                            <div class="zone z2">
+                                B
+                            </div>
+                            <div class="zone z3">
+                                C
+                            </div>
+                            <div class="zone z4">
+                                D
+                            </div>
+                            <div class="zone z5">
+                                E
+                            </div>
+                            <div class="zone z6">
+                                F
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-white">
+                        <strong>Alerts</strong>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="alerts" class="list-group list-group-flush"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <strong>Robot Fleet</strong>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0">
+                            <thead>
+                                <tr><th>Robot</th><th>Status</th><th>Battery</th><th></th></tr>
+                            </thead>
+                            <tbody id="robotTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-white">
+                        <strong>Selected Robot Telemetry</strong><select id="robotSelect" class="form-select form-select-sm w-auto float-end" onchange="selectRobot(this.value)"></select>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3 mb-2" id="telemetry"></div>
+                        <canvas id="chart" height="110"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="modal fade" id="controlModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Robot Controls</h5><button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalRobot"></div>
+                    <div class="d-grid gap-2 mt-3">
+                        <button class="btn btn-success" onclick="action('start')"><i class="bi bi-play-fill"></i> Start</button><button class="btn btn-warning" onclick="action('charge')"><i class="bi bi-lightning-charge-fill"></i> Send to charge</button><button class="btn btn-secondary" onclick="action('stop')"><i class="bi bi-stop-fill"></i> Stop</button><button class="btn btn-outline-danger" onclick="action('reset')"><i class="bi bi-arrow-counterclockwise"></i> Reset telemetry</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
